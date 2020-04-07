@@ -15,7 +15,14 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    // TODO
+    const response = await api
+      .post("repositories", {
+        url: "https://github.com/julian-kuroiwa",
+        title: "Desafio ReactJS",
+        techs: ["React", "Node.js"],
+      });
+
+      setProjects([...projects, response.data]);
   }
 
   async function handleRemoveRepository(id) {
@@ -28,7 +35,7 @@ function App() {
         {
           projects.map(project => {
             return (
-              <li>
+              <li key={project.id}>
                 {project.title}
 
                 <button onClick={() => handleRemoveRepository(project.id)}>
