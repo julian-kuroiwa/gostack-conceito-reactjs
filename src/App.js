@@ -8,7 +8,7 @@ function App() {
 
   useEffect(() => {
     api
-      .get("repositories")
+      .get("/repositories")
       .then(response => {
         setProjects(response.data);
       });
@@ -16,7 +16,7 @@ function App() {
 
   async function handleAddRepository() {
     const response = await api
-      .post("repositories", {
+      .post("/repositories", {
         url: "https://github.com/julian-kuroiwa",
         title: "Desafio ReactJS",
         techs: ["React", "Node.js"],
@@ -26,7 +26,11 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    await api.delete(`/repositories/${id}`);
+
+    const repositories = projects.filter(project => project.id !== id);
+
+    setProjects(repositories);
   }
 
   return (
